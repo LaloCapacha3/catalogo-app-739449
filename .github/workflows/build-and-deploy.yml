@@ -57,7 +57,7 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: dist-files
-          path: ./catalogo-app/dist
+          path: ./dist
 
       - uses: aws-actions/configure-aws-credentials@v4
         with:
