@@ -16,10 +16,6 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./catalogo-app
-        
     steps:
       - uses: actions/checkout@v4
 
@@ -36,18 +32,16 @@ jobs:
 
       - run: echo "VERSION_TAG=1.0.${{ github.run_number }}-${{ steps.vars.outputs.branch_name }}" >> $GITHUB_ENV
       
-      - run: echo "DOCKER_IMAGE=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}:${{ env.VERSION_TAG }}" >> $GITHUB_ENV
+      - run: echo "DOCKER_IMAGE=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.$AWS_REGION.amazonaws.com/$ECR_REPOSITORY:$VERSION_TAG" >> $GITHUB_ENV
 
       - run: npm ci
       
       - run: npm run build
 
-      - run: npm test || echo "No tests found"
-
       - uses: actions/upload-artifact@v4
         with:
           name: dist-files
-          path: catalogo-app/dist/
+          path: dist/
 
   docker:
     runs-on: ubuntu-latest
