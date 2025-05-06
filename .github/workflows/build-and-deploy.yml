@@ -79,9 +79,6 @@ jobs:
       - run: echo "DOCKER_IMAGE=${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ env.AWS_REGION }}.amazonaws.com/${{ env.ECR_REPOSITORY }}:${{ env.VERSION_TAG }}" >> $GITHUB_ENV
       
       - run: |
-          # Crear repositorio ECR si no existe
-          aws ecr describe-repositories --repository-names ${{ env.ECR_REPOSITORY }} || aws ecr create-repository --repository-name ${{ env.ECR_REPOSITORY }}
-          
           docker build -t ${{ env.ECR_REPOSITORY }}:latest .
           docker tag ${{ env.ECR_REPOSITORY }}:latest $DOCKER_IMAGE
           docker push $DOCKER_IMAGE
