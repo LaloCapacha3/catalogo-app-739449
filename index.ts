@@ -53,6 +53,7 @@ app.post('/clientes', async (req: Request, res: Response) => {
     }
 });
 
+
 app.get('/clientes', async (req: Request, res: Response) => {
     const startTime = Date.now();
     const endpoint = 'GET /clientes';
